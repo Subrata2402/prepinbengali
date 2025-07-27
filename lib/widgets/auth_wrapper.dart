@@ -1,14 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../screens/welcome_screen.dart';
 import '../screens/login_screen.dart';
-import '../screens/home_screen.dart';
+import '../screens/main_screen.dart';
 import '../services/google_auth_service.dart';
 
-class AuthWrapper extends StatelessWidget {
+class AuthWrapper extends StatefulWidget {
   const AuthWrapper({super.key});
 
   @override
+  State<AuthWrapper> createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  static const String _hasSeenWelcomeKey = 'has_seen_welcome';
+  bool _hasSeenWelcome = false;
+  bool _isCheckingWelcome = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkWelcomeStatus();
+  }
+
+  Future<void> _checkWelcomeStatus() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final hasSeenWelcome = prefs.getBool(_hasSeenWelcomeKey) ?? false;
+      
+      if (mounted) {
+        setState(() {
+          _hasSeenWelcome = hasSeenWelcome;
+          _isCheckingWelcome = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error checking welcome status: $e');
+      if (mounted) {
+        setState(() {
+          _isCheckingWelcome = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _markWelcomeAsSeen() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_hasSeenWelcomeKey, true);
+      
+      if (mounted) {
+        setState(() {
+          _hasSeenWelcome = true;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error marking welcome as seen: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Show loading while checking welcome status
+    if (_isCheckingWelcome) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Show welcome screen if user hasn't seen it
+    if (!_hasSeenWelcome) {
+      return WelcomeScreen(
+        onGetStarted: _markWelcomeAsSeen,
+      );
+    }
+
+    // Show auth-based screens
     final GoogleAuthService authService = GoogleAuthService();
     
     return StreamBuilder<User?>(
@@ -26,7 +96,7 @@ class AuthWrapper extends StatelessWidget {
         // Show appropriate screen based on auth state
         if (snapshot.hasData && snapshot.data != null) {
           // User is signed in
-          return const HomeScreen();
+          return const MainScreen();
         } else {
           // User is not signed in
           return const LoginScreen();

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/google_auth_service.dart';
+import '../providers/theme_provider.dart';
+import '../theme/app_theme.dart';
+import '../screens/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,13 +30,31 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final user = _authService.currentUser;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
         title: const Text('Prep in Bengali'),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
         actions: [
+          // Theme toggle button
+          IconButton(
+            icon: Icon(themeProvider.themeMode.icon),
+            onPressed: () => themeProvider.toggleTheme(),
+            tooltip: 'Toggle Theme',
+          ),
+          // Settings button
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
+            tooltip: 'Settings',
+          ),
+          // Sign out button
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: _signOut,
@@ -45,75 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // User Profile Card
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    // User Avatar
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: user?.photoURL != null
-                          ? NetworkImage(user!.photoURL!)
-                          : null,
-                      child: user?.photoURL == null
-                          ? const Icon(Icons.person, size: 30)
-                          : null,
-                    ),
-                    const SizedBox(width: 16),
-                    
-                    // User Info
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user?.displayName ?? 'Unknown User',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            user?.email ?? 'No email',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            
-            const SizedBox(height: 24),
-            
             // Welcome Message
-            const Text(
-              'Welcome to Prep in Bengali!',
-              style: TextStyle(
-                fontSize: 24,
+            Text(
+              'Welcome back, ${user?.displayName?.toString().split(" ").first ?? 'Guest'}!',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             
-            const Text(
-              'Start your learning journey with Bengali preparation materials.',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+            Text(
+              'Continue your Bengali learning journey',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
             
@@ -127,35 +95,59 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisSpacing: 16,
                 children: [
                   _buildFeatureCard(
-                    icon: Icons.book,
+                    context: context,
+                    icon: Icons.book_rounded,
                     title: 'Study Materials',
                     description: 'Access Bengali study resources',
+                    gradient: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                    ],
                     onTap: () {
-                      // Navigate to study materials
+                      _showComingSoonDialog(context, 'Study Materials');
                     },
                   ),
                   _buildFeatureCard(
-                    icon: Icons.quiz,
+                    context: context,
+                    icon: Icons.quiz_rounded,
                     title: 'Practice Tests',
                     description: 'Take practice exams',
+                    gradient: [
+                      Theme.of(context).colorScheme.secondary,
+                      Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
+                    ],
                     onTap: () {
-                      // Navigate to practice tests
+                      _showComingSoonDialog(context, 'Practice Tests');
                     },
                   ),
                   _buildFeatureCard(
-                    icon: Icons.trending_up,
+                    context: context,
+                    icon: Icons.trending_up_rounded,
                     title: 'Progress',
                     description: 'Track your learning progress',
+                    gradient: [
+                      Colors.orange,
+                      Colors.orange.withValues(alpha: 0.7),
+                    ],
                     onTap: () {
-                      // Navigate to progress tracking
+                      _showComingSoonDialog(context, 'Progress Tracking');
                     },
                   ),
                   _buildFeatureCard(
-                    icon: Icons.person,
+                    context: context,
+                    icon: Icons.person_rounded,
                     title: 'Profile',
                     description: 'Manage your profile',
+                    gradient: [
+                      Colors.teal,
+                      Colors.teal.withValues(alpha: 0.7),
+                    ],
                     onTap: () {
-                      // Navigate to profile
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsScreen(),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -168,34 +160,52 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildFeatureCard({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required String description,
+    required List<Color> gradient,
     required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      elevation: 4,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Padding(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                gradient[0].withValues(alpha: 0.1),
+                gradient[1].withValues(alpha: 0.05),
+              ],
+            ),
+          ),
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 40,
-                color: Colors.deepPurple,
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: gradient,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  size: 32,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -203,16 +213,46 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 4),
               Text(
                 description,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _showComingSoonDialog(BuildContext context, String feature) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(
+                Icons.construction_rounded,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(width: 8),
+              const Text('Coming Soon'),
+            ],
+          ),
+          content: Text(
+            '$feature feature is under development. Stay tuned for updates!',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
