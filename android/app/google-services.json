@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "119955326808",
+    "project_id": "prepinbengali",
+    "storage_bucket": "prepinbengali.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119955326808:android:2478ef992eb2c879b5872d",
+        "android_client_info": {
+          "package_name": "com.example.prepinbengali"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119955326808-09np1ec1eg69q76p5frlq966k061ishf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.prepinbengali",
+            "certificate_hash": "ddb0af8e4a53bf412ba11ac13276f78c3fb7e9ef"
+          }
+        },
+        {
+          "client_id": "119955326808-rocafeo7bg80jqv8us3l10jivt1q14q2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuitpB--CNG8nkghnBC2BZmYTmfnNMqbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119955326808-rocafeo7bg80jqv8us3l10jivt1q14q2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "119955326808-fb9dp3re1lnplba3j9jr6j8m2lc941pr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.prepinbengali"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
