@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:prepinbengali/providers/theme_provider.dart';
+import 'package:prepinbengali/theme/app_theme.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
-import '../theme/app_theme.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -35,6 +36,8 @@ class SettingsScreen extends StatelessWidget {
           // Other Settings
           _buildSectionHeader(context, 'Preferences'),
           _buildPreferencesCard(context),
+
+           SizedBox(height: 80),
         ],
       ),
     );
@@ -47,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
         ),
       ),
     );

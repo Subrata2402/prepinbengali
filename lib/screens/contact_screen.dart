@@ -25,7 +25,7 @@ class ContactScreen extends StatelessWidget {
               'Get in Touch',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.9),
               ),
             ),
             const SizedBox(height: 8),
@@ -108,7 +108,7 @@ class ContactScreen extends StatelessWidget {
                       'Send us a Message',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.9),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -165,7 +165,7 @@ class ContactScreen extends StatelessWidget {
               ),
             ),
             
-            const SizedBox(height: 32),
+            const SizedBox(height: 80),
           ],
         ),
       ),

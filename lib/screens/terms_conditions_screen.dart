@@ -109,7 +109,7 @@ class TermsConditionsScreen extends StatelessWidget {
               content: 'If you have any questions about these Terms and Conditions, please contact us at:\n\nEmail: legal@prepinbengali.com\nAddress: Dhaka, Bangladesh',
             ),
             
-            const SizedBox(height: 32),
+            const SizedBox(height: 80),
           ],
         ),
       ),

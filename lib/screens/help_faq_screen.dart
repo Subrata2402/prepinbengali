@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prepinbengali/screens/contact_screen.dart';
 import 'package:prepinbengali/theme/app_theme.dart';
 
 class HelpFaqScreen extends StatefulWidget {
@@ -9,6 +10,10 @@ class HelpFaqScreen extends StatefulWidget {
 }
 
 class _HelpFaqScreenState extends State<HelpFaqScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  List<FAQItem> filteredFaqItems = [];
+  bool _hasSearchText = false;
+  
   final List<FAQItem> faqItems = [
     FAQItem(
       question: 'How do I create an account?',
@@ -53,6 +58,36 @@ class _HelpFaqScreenState extends State<HelpFaqScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    filteredFaqItems = faqItems; // Initially show all items
+    _searchController.addListener(() {
+      setState(() {
+        _hasSearchText = _searchController.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterFAQs(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredFaqItems = faqItems;
+      } else {
+        filteredFaqItems = faqItems.where((item) {
+          return item.question.toLowerCase().contains(query.toLowerCase()) ||
+                 item.answer.toLowerCase().contains(query.toLowerCase());
+        }).toList();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +108,8 @@ class _HelpFaqScreenState extends State<HelpFaqScreen> {
               'Frequently Asked Questions',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+                fontSize: 24,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: 8),
@@ -88,24 +124,74 @@ class _HelpFaqScreenState extends State<HelpFaqScreen> {
             
             // Search Bar
             TextField(
+              controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search FAQ...',
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon: _hasSearchText
+                    ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          _filterFAQs('');
+                        },
+                      )
+                    : null,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 fillColor: Theme.of(context).colorScheme.surface,
                 filled: true,
               ),
-              onChanged: (value) {
-                // TODO: Implement search functionality
-              },
+              onChanged: _filterFAQs,
             ),
             
             const SizedBox(height: 24),
             
+            // Search results info
+            if (_hasSearchText)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Text(
+                  '${filteredFaqItems.length} result${filteredFaqItems.length == 1 ? '' : 's'} found',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+            
             // FAQ List
-            ...faqItems.map((item) => _buildFAQItem(context, item)),
+            ...filteredFaqItems.map((item) => _buildFAQItem(context, item)),
+            
+            // Show "No results found" message when search yields no results
+            if (filteredFaqItems.isEmpty && _hasSearchText)
+              Container(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.search_off,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No results found',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Try searching with different keywords',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             
             const SizedBox(height: 24),
             
@@ -141,7 +227,9 @@ class _HelpFaqScreenState extends State<HelpFaqScreen> {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/contact');
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ContactScreen(),
+                        ));
                       },
                       child: const Text('Contact Support'),
                     ),
@@ -150,7 +238,7 @@ class _HelpFaqScreenState extends State<HelpFaqScreen> {
               ),
             ),
             
-            const SizedBox(height: 32),
+            const SizedBox(height: 80),
           ],
         ),
       ),
@@ -164,8 +252,12 @@ class _HelpFaqScreenState extends State<HelpFaqScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: AppTheme.getCardShadow(context),
       ),
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 15),
       child: ExpansionTile(
+        backgroundColor: Colors.transparent,
+        collapsedBackgroundColor: Colors.transparent,
+        iconColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        collapsedIconColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
         title: Text(
           item.question,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(

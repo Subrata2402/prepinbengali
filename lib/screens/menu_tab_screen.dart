@@ -136,7 +136,7 @@ class MenuTabScreen extends StatelessWidget {
               children: [
                 Icon(
                   Icons.info_outline_rounded,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -189,7 +189,7 @@ class MenuTabScreen extends StatelessWidget {
           ),
         ),
         
-        const SizedBox(height: 32),
+        const SizedBox(height: 80),
       ],
       ),
     );
@@ -202,7 +202,7 @@ class MenuTabScreen extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
         ),
       ),
     );
@@ -231,7 +231,7 @@ class MenuTabScreen extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
       ),
       title: Text(
         title,

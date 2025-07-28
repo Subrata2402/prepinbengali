@@ -6,6 +6,7 @@ import '../screens/class_tab_screen.dart';
 import '../screens/course_tab_screen.dart';
 import '../screens/menu_tab_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/notification_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,6 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   final GoogleAuthService _authService = GoogleAuthService();
   final ScrollController _scrollController = ScrollController();
   bool _showShadow = false;
+  int _unreadNotificationCount = 2; // This can be fetched from a service later
 
   @override
   void initState() {
@@ -97,6 +99,33 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _navigateToNotifications() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const NotificationScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    ).then((_) {
+      // Update notification count when returning from notification screen
+      // In a real app, this would be managed by a state management solution
+      setState(() {
+        _unreadNotificationCount = 0; // Mark all as read after viewing
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = _authService.currentUser;
@@ -111,6 +140,40 @@ class _MainScreenState extends State<MainScreen> {
         shadowColor: Theme.of(context).colorScheme.shadow,
         surfaceTintColor: Theme.of(context).colorScheme.surface,
         actions: [
+          Stack(
+            children: [
+              IconButton(
+                onPressed: _navigateToNotifications,
+                icon: const Icon(Icons.notifications_outlined, size: 34,),
+              ),
+              // Notification badge (dynamic count)
+              if (_unreadNotificationCount > 0)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 18,
+                      minHeight: 18,
+                    ),
+                    child: Text(
+                      _unreadNotificationCount > 99 ? '99+' : '$_unreadNotificationCount',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
+          ),
           IconButton(
             onPressed: _navigateToProfile,
             icon: CircleAvatar(

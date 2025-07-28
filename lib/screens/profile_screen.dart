@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/google_auth_service.dart';
 import '../theme/app_theme.dart';
 
@@ -16,6 +17,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // Controllers for editable fields
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
+  
+  // Onboarding data
+  DateTime? _dateOfBirth;
+  String? _selectedClass;
+  String _parentName = '';
+  String _whatsappNumber = '';
+  String _address = '';
 
   @override
   void initState() {
@@ -23,6 +31,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = _authService.currentUser;
     _nameController.text = user?.displayName ?? '';
     _bioController.text = 'Bengali language enthusiast'; // Default bio
+    _loadOnboardingData();
+  }
+  
+  Future<void> _loadOnboardingData() async {
+    final prefs = await SharedPreferences.getInstance();
+    
+    // Load date of birth
+    final dobString = prefs.getString('date_of_birth');
+    if (dobString != null) {
+      _dateOfBirth = DateTime.tryParse(dobString);
+    }
+    
+    // Load other onboarding data
+    _selectedClass = prefs.getString('selected_class');
+    _parentName = prefs.getString('parent_name') ?? '';
+    _whatsappNumber = prefs.getString('whatsapp_number') ?? '';
+    _address = prefs.getString('address') ?? '';
+    
+    setState(() {});
   }
 
   @override
@@ -193,6 +220,112 @@ class _ProfileScreenState extends State<ProfileScreen> {
             
             const SizedBox(height: 24),
             
+            // Personal Information Card (from onboarding)
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardTheme.color,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: AppTheme.getCardShadow(context),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Personal Information',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        // Edit Personal Info Button
+                        TextButton.icon(
+                          onPressed: () {
+                            // Navigate to onboarding to update information
+                            Navigator.of(context).pushNamed('/onboarding').then((_) {
+                              // Reload data when returning from onboarding
+                              _loadOnboardingData();
+                            });
+                          },
+                          icon: const Icon(Icons.edit_rounded, size: 16),
+                          label: const Text('Update'),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                        ),
+                      ],
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // Date of Birth
+                    _buildProfileField(
+                      context,
+                      label: 'Date of Birth',
+                      value: _dateOfBirth != null 
+                          ? '${_dateOfBirth!.day}/${_dateOfBirth!.month}/${_dateOfBirth!.year}'
+                          : 'Not provided',
+                      icon: Icons.cake_rounded,
+                      isEditable: false,
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // Class
+                    _buildProfileField(
+                      context,
+                      label: 'Class',
+                      value: _selectedClass != null ? 'Class $_selectedClass' : 'Not selected',
+                      icon: Icons.school_rounded,
+                      isEditable: false,
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // Parent/Guardian Name
+                    _buildProfileField(
+                      context,
+                      label: 'Parent/Guardian',
+                      value: _parentName.isNotEmpty ? _parentName : 'Not provided',
+                      icon: Icons.family_restroom_rounded,
+                      isEditable: false,
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // WhatsApp Number
+                    _buildProfileField(
+                      context,
+                      label: 'WhatsApp',
+                      value: _whatsappNumber.isNotEmpty ? '+91 $_whatsappNumber' : 'Not provided',
+                      icon: Icons.phone_rounded,
+                      isEditable: false,
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // Address
+                    _buildProfileField(
+                      context,
+                      label: 'Address',
+                      value: _address.isNotEmpty ? _address : 'Not provided',
+                      icon: Icons.location_on_rounded,
+                      isEditable: false,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 24),
+            
             // Statistics Card
             Container(
               decoration: BoxDecoration(
@@ -326,7 +459,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             
-            const SizedBox(height: 32),
+            const SizedBox(height: 80),
           ],
         ),
       ),

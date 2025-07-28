@@ -28,7 +28,9 @@ class AboutScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.1),
                     ),
                     child: Icon(
                       Icons.school_rounded,
@@ -48,22 +50,24 @@ class AboutScreen extends StatelessWidget {
                   Text(
                     'বাংলায় শিখুন, প্রস্তুতি নিন',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // Mission Section
             Container(
               decoration: BoxDecoration(
-        color: Theme.of(context).cardTheme.color,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: AppTheme.getCardShadow(context),
-      ),
+                color: Theme.of(context).cardTheme.color,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: AppTheme.getCardShadow(context),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -78,7 +82,9 @@ class AboutScreen extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Our Mission',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
                           ),
@@ -94,16 +100,16 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Vision Section
             Container(
               decoration: BoxDecoration(
-        color: Theme.of(context).cardTheme.color,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: AppTheme.getCardShadow(context),
-      ),
+                color: Theme.of(context).cardTheme.color,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: AppTheme.getCardShadow(context),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -118,7 +124,9 @@ class AboutScreen extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Our Vision',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
@@ -134,16 +142,16 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Features Section
             Container(
               decoration: BoxDecoration(
-        color: Theme.of(context).cardTheme.color,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: AppTheme.getCardShadow(context),
-      ),
+                color: Theme.of(context).cardTheme.color,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: AppTheme.getCardShadow(context),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -151,14 +159,13 @@ class AboutScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.star_rounded,
-                          color: Colors.orange,
-                        ),
+                        Icon(Icons.star_rounded, color: Colors.orange),
                         const SizedBox(width: 8),
                         Text(
                           'What We Offer',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.orange,
                           ),
@@ -168,21 +175,45 @@ class AboutScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Column(
                       children: [
-                        _buildFeatureItem(context, Icons.book_rounded, 'Comprehensive Study Materials'),
-                        _buildFeatureItem(context, Icons.quiz_rounded, 'Interactive Practice Tests'),
-                        _buildFeatureItem(context, Icons.video_library_rounded, 'Video Lectures'),
-                        _buildFeatureItem(context, Icons.group_rounded, 'Live Classes'),
-                        _buildFeatureItem(context, Icons.trending_up_rounded, 'Progress Tracking'),
-                        _buildFeatureItem(context, Icons.support_rounded, 'Expert Support'),
+                        _buildFeatureItem(
+                          context,
+                          Icons.book_rounded,
+                          'Comprehensive Study Materials',
+                        ),
+                        _buildFeatureItem(
+                          context,
+                          Icons.quiz_rounded,
+                          'Interactive Practice Tests',
+                        ),
+                        _buildFeatureItem(
+                          context,
+                          Icons.video_library_rounded,
+                          'Video Lectures',
+                        ),
+                        _buildFeatureItem(
+                          context,
+                          Icons.group_rounded,
+                          'Live Classes',
+                        ),
+                        _buildFeatureItem(
+                          context,
+                          Icons.trending_up_rounded,
+                          'Progress Tracking',
+                        ),
+                        _buildFeatureItem(
+                          context,
+                          Icons.support_rounded,
+                          'Expert Support',
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Team Section
             Container(
               decoration: BoxDecoration(
@@ -197,14 +228,13 @@ class AboutScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.people_rounded,
-                          color: Colors.purple,
-                        ),
+                        Icon(Icons.people_rounded, color: Colors.purple),
                         const SizedBox(width: 8),
                         Text(
                           'Our Team',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.purple,
                           ),
@@ -220,9 +250,9 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Contact Info
             Container(
               decoration: BoxDecoration(
@@ -237,14 +267,13 @@ class AboutScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.contact_mail_rounded,
-                          color: Colors.teal,
-                        ),
+                        Icon(Icons.contact_mail_rounded, color: Colors.teal),
                         const SizedBox(width: 8),
                         Text(
                           'Get in Touch',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.teal,
                           ),
@@ -260,42 +289,37 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // App Version
             Center(
               child: Text(
                 'Version 1.0.0',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
             ),
-            
-            const SizedBox(height: 32),
+
+            const SizedBox(height: 80),
           ],
         ),
       ),
     );
   }
-  
+
   Widget _buildFeatureItem(BuildContext context, IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
-          Icon(
-            icon,
-            size: 20,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
           ),
         ],
       ),

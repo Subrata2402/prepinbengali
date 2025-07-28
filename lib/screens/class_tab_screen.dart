@@ -16,7 +16,7 @@ class ClassTabScreen extends StatelessWidget {
             'Classes',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
 
