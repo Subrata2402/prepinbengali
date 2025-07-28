@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/google_auth_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/auth_wrapper.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -581,16 +582,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             TextButton(
               onPressed: () async {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(); // Go back to main screen
-                await _authService.signOut();
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Successfully signed out!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                Navigator.of(context).pop(); // Close dialog
+                
+                try {
+                  await _authService.signOut();
+                  
+                  if (mounted) {
+                    // Navigate back to the root and replace with AuthWrapper
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const AuthWrapper(),
+                      ),
+                      (route) => false,
+                    );
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error signing out: $e'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 }
               },
               child: const Text(

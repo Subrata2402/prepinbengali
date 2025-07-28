@@ -9,6 +9,7 @@ import '../screens/contact_screen.dart';
 import '../screens/privacy_policy_screen.dart';
 import '../screens/terms_conditions_screen.dart';
 import '../screens/help_faq_screen.dart';
+import '../widgets/auth_wrapper.dart';
 
 class MenuTabScreen extends StatelessWidget {
   const MenuTabScreen({super.key});
@@ -334,15 +335,29 @@ class MenuTabScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                Navigator.of(context).pop();
-                await authService.signOut();
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Successfully signed out!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                Navigator.of(context).pop(); // Close dialog
+                
+                try {
+                  await authService.signOut();
+                  
+                  if (context.mounted) {
+                    // Navigate back to the root and replace with AuthWrapper
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const AuthWrapper(),
+                      ),
+                      (route) => false,
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error signing out: $e'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 }
               },
               child: const Text(

@@ -133,7 +133,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('PrepInBengali', style: TextStyle(fontSize: 30)),
+        title: const Text('PrepinBengali', style: TextStyle(fontSize: 30)),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         scrolledUnderElevation: 4.0,
@@ -216,6 +216,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         child: NavigationBar(
+          indicatorColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
           selectedIndex: _currentIndex,
           onDestinationSelected: _onTabTapped,
           backgroundColor: Theme.of(context).colorScheme.surface,
