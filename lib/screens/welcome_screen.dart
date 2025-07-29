@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prepinbengali/widgets/app_logo.dart';
 import '../theme/app_theme.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -57,8 +58,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors:
                 isDark
                     ? [
@@ -67,9 +68,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       AppColors.primaryDark.withValues(alpha: 0.2),
                     ]
                     : [
-                      AppColors.backgroundLight,
+                      // AppColors.backgroundLight,
+                      AppColors.primaryLight,
                       AppColors.primaryLight.withValues(alpha: 0.5),
-                      AppColors.primaryLight.withValues(alpha: 0.2),
+                      AppColors.backgroundLight
                     ],
           ),
         ),
@@ -89,65 +91,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // App Logo/Icon
-                              // Container(
-                              //   padding: const EdgeInsets.all(24),
-                              //   decoration: BoxDecoration(
-                              //     shape: BoxShape.circle,
-                              //     gradient: LinearGradient(
-                              //       colors: [
-                              //         Theme.of(context).colorScheme.primary,
-                              //         Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
-                              //       ],
-                              //     ),
-                              //     boxShadow: [
-                              //       BoxShadow(
-                              //         color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
-                              //         blurRadius: 20,
-                              //         spreadRadius: 5,
-                              //       ),
-                              //     ],
-                              //   ),
-                              //   child: Icon(
-                              //     Icons.school_rounded,
-                              //     size: 80,
-                              //     color: Theme.of(context).colorScheme.onPrimary,
-                              //   ),
-                              // ),
+                              AppLogo(),
 
-                              // const SizedBox(height: 48),
-
-                              // // App Title
-                              // Text(
-                              //   'Prep in Bengali',
-                              //   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                              //     fontWeight: FontWeight.bold,
-                              //     color: Theme.of(context).colorScheme.primary,
-                              //     fontSize: 36,
-                              //   ),
-                              //   textAlign: TextAlign.center,
-                              // ),
-
-                              // const SizedBox(height: 16),
-
-                              // // Subtitle
-                              // Text(
-                              //   'বাংলায় শিখুন, প্রস্তুতি নিন',
-                              //   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              //     color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
-                              //     fontSize: 18,
-                              //     fontWeight: FontWeight.w500,
-                              //   ),
-                              //   textAlign: TextAlign.center,
-                              // ),
-                              Image.asset(
-                                'assets/images/app_logo.png',
-                                // height: 24,
-                                // width: 24,
-                                // color: Theme.of(context).colorScheme.primary,
-                              ),
-
-                              // const SizedBox(height: 48),
+                              const SizedBox(height: 48),
 
                               // Feature highlights
                               _buildFeatureRow(

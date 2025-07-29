@@ -1,4 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:prepinbengali/screens/privacy_policy_screen.dart';
+import 'package:prepinbengali/screens/terms_conditions_screen.dart';
+import 'package:prepinbengali/widgets/app_logo.dart';
 import '../services/google_auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -57,8 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
+              Theme.of(context).colorScheme.primary,
+              // Theme.of(context).colorScheme.primary,
               Theme.of(context).colorScheme.surface,
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
             ],
           ),
         ),
@@ -68,42 +73,16 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // App Logo or Title
-                // Container(
-                //   padding: const EdgeInsets.all(20),
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-                //   ),
-                //   child: Icon(
-                //     Icons.school_rounded,
-                //     size: 80,
-                //     color: Theme.of(context).colorScheme.primary,
-                //   ),
-                // ),
-                // const SizedBox(height: 32),
-                // Text(
-                //   'Prep in Bengali',
-                //   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                //     fontWeight: FontWeight.bold,
-                //     color: Theme.of(context).colorScheme.primary,
-                //   ),
-                // ),
-                // const SizedBox(height: 8),
-                // Text(
-                //   'Learn and prepare in Bengali',
-                //   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                //     color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                //   ),
-                //   textAlign: TextAlign.center,
-                // ),
-                Image.asset(
-                  'assets/images/app_logo.png',
-                  // height: 24,
-                  // width: 24,
-                  // color: Theme.of(context).colorScheme.primary,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppLogo()
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 48),
+
+                const SizedBox(height: 24),
 
                 // Google Sign In Button
                 SizedBox(
@@ -171,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const Text(
                                       'Continue with Google',
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w500,
                                         color: Color(0xFF3C4043),
                                       ),
@@ -186,15 +165,81 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 24),
 
                 // Terms and Privacy
-                Text(
-                  'By signing in, you agree to our Terms of Service and Privacy Policy',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurface.withValues(alpha: 0.6),
-                  ),
+                RichText(
                   textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: [
+                      TextSpan(
+                        text:
+                            "By proceeding, I acknowledge that I have read, understood and agreed to be bound by PrepinBengali's ",
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Privacy Policy",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PrivacyPolicyScreen(),
+                                  ),
+                                );
+                              },
+                      ),
+                      TextSpan(
+                        text: " and ",
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Terms & Conditions",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => TermsConditionsScreen(),
+                                  ),
+                                );
+                              },
+                      ),
+                      TextSpan(
+                        text: ".",
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
+                const SizedBox(height: 80),
               ],
             ),
           ),

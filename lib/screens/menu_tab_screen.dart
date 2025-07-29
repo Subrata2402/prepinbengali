@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../services/google_auth_service.dart';
-import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../screens/settings_screen.dart';
 import '../screens/about_screen.dart';
@@ -256,70 +254,6 @@ class MenuTabScreen extends StatelessWidget {
     );
   }
   
-  void _showThemeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Consumer<ThemeProvider>(
-          builder: (context, themeProvider, child) {
-            return AlertDialog(
-              title: const Text('Choose Theme'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  RadioListTile(
-                    title: const Row(
-                      children: [
-                        Icon(Icons.light_mode, size: 20),
-                        SizedBox(width: 8),
-                        Text('Light'),
-                      ],
-                    ),
-                    value: 0,
-                    groupValue: themeProvider.themeMode.index,
-                    onChanged: (value) {
-                      themeProvider.setThemeMode(AppThemeMode.values[0]);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Row(
-                      children: [
-                        Icon(Icons.dark_mode, size: 20),
-                        SizedBox(width: 8),
-                        Text('Dark'),
-                      ],
-                    ),
-                    value: 1,
-                    groupValue: themeProvider.themeMode.index,
-                    onChanged: (value) {
-                      themeProvider.setThemeMode(AppThemeMode.values[1]);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Row(
-                      children: [
-                        Icon(Icons.settings_brightness, size: 20),
-                        SizedBox(width: 8),
-                        Text('System'),
-                      ],
-                    ),
-                    value: 2,
-                    groupValue: themeProvider.themeMode.index,
-                    onChanged: (value) {
-                      themeProvider.setThemeMode(AppThemeMode.values[2]);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
   
   void _showSignOutDialog(BuildContext context, GoogleAuthService authService) {
     showDialog(
