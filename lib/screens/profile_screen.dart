@@ -166,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       'Profile Information',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                       ),
                     ),
                     
@@ -240,11 +240,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           'Personal Information',
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                           ),
                         ),
-                        // Edit Personal Info Button
-                        TextButton.icon(
+                        IconButton(
+                          icon: const Icon(Icons.edit_rounded, size: 20),
                           onPressed: () {
                             // Navigate to onboarding to update information
                             Navigator.of(context).pushNamed('/onboarding').then((_) {
@@ -252,13 +252,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               _loadOnboardingData();
                             });
                           },
-                          icon: const Icon(Icons.edit_rounded, size: 16),
-                          label: const Text('Update'),
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            minimumSize: Size.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
                         ),
                       ],
                     ),
@@ -343,7 +336,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       'Learning Statistics',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                       ),
                     ),
                     
@@ -414,36 +407,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.security_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    title: const Text('Privacy Settings'),
-                    subtitle: const Text('Manage your privacy preferences'),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                    onTap: () {
-                      // TODO: Navigate to privacy settings
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Privacy settings coming soon!')),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.notifications_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    title: const Text('Notification Settings'),
-                    subtitle: const Text('Configure your notifications'),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                    onTap: () {
-                      // TODO: Navigate to notification settings
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Notification settings coming soon!')),
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(
+                  //     Icons.security_rounded,
+                  //     color: Theme.of(context).colorScheme.primary,
+                  //   ),
+                  //   title: const Text('Privacy Settings'),
+                  //   subtitle: const Text('Manage your privacy preferences'),
+                  //   trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
+                  //   onTap: () {
+                  //     // TODO: Navigate to privacy settings
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       const SnackBar(content: Text('Privacy settings coming soon!')),
+                  //     );
+                  //   },
+                  // ),
+                  // ListTile(
+                  //   leading: Icon(
+                  //     Icons.notifications_rounded,
+                  //     color: Theme.of(context).colorScheme.primary,
+                  //   ),
+                  //   title: const Text('Notification Settings'),
+                  //   subtitle: const Text('Configure your notifications'),
+                  //   trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
+                  //   onTap: () {
+                  //     // TODO: Navigate to notification settings
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       const SnackBar(content: Text('Notification settings coming soon!')),
+                  //     );
+                  //   },
+                  // ),
                   ListTile(
                     leading: const Icon(
                       Icons.logout_rounded,
@@ -483,7 +476,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
           ),
         ),
         const SizedBox(height: 8),

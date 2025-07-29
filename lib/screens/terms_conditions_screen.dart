@@ -24,7 +24,7 @@ class TermsConditionsScreen extends StatelessWidget {
               'Terms and Conditions',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: 8),
@@ -106,7 +106,7 @@ class TermsConditionsScreen extends StatelessWidget {
             _buildSection(
               context,
               title: '12. Contact Information',
-              content: 'If you have any questions about these Terms and Conditions, please contact us at:\n\nEmail: legal@prepinbengali.com\nAddress: Dhaka, Bangladesh',
+              content: 'If you have any questions about these Terms and Conditions, please contact us at:\n\nEmail: support@prepinbengali.in\nAddress: Midnapore, West Bengal, India',
             ),
             
             const SizedBox(height: 80),
@@ -126,7 +126,7 @@ class TermsConditionsScreen extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),

@@ -24,7 +24,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               'Privacy Policy',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: 8),
@@ -88,7 +88,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             _buildSection(
               context,
               title: '9. Contact Us',
-              content: 'If you have any questions about this privacy policy, please contact us at:\n\nEmail: privacy@prepinbengali.com\nAddress: Dhaka, Bangladesh',
+              content: 'If you have any questions about this privacy policy, please contact us at:\n\nEmail: support@prepinbengali.in\nAddress: Midnapore, West Bengal, India',
             ),
             
             const SizedBox(height: 80),
@@ -108,7 +108,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),

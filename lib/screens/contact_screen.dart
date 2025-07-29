@@ -53,7 +53,7 @@ class ContactScreen extends StatelessWidget {
                       context,
                       icon: Icons.email_rounded,
                       title: 'Email',
-                      subtitle: 'support@prepinbengali.com',
+                      subtitle: 'support@prepinbengali.in',
                       onTap: () {
                         // TODO: Open email app
                         ScaffoldMessenger.of(context).showSnackBar(

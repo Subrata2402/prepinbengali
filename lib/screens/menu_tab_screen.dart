@@ -47,13 +47,13 @@ class MenuTabScreen extends StatelessWidget {
               subtitle: 'App preferences and configuration',
               onTap: () => _navigateToScreen(context, const SettingsScreen()),
             ),
-            _buildMenuItem(
-              context,
-              icon: Icons.palette_rounded,
-              title: 'Theme Configuration',
-              subtitle: 'Customize app appearance',
-              onTap: () => _showThemeDialog(context),
-            ),
+            // _buildMenuItem(
+            //   context,
+            //   icon: Icons.palette_rounded,
+            //   title: 'Theme Configuration',
+            //   subtitle: 'Customize app appearance',
+            //   onTap: () => _showThemeDialog(context),
+            // ),
           ],
         ),
         

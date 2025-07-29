@@ -28,8 +28,8 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: 24),
           
           // App Info Section
-          _buildSectionHeader(context, 'About'),
-          _buildAppInfoCard(context),
+          // _buildSectionHeader(context, 'About'),
+          // _buildAppInfoCard(context),
           
           const SizedBox(height: 24),
           
